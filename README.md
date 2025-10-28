@@ -50,7 +50,14 @@ http://localhost:5000
 
 ## Configuration
 
-The application can be configured by modifying the following variables in `app.py`:
+The application can be configured using environment variables:
+
+- `SECRET_KEY`: Secret key for session management (default: 'dev-secret-key-change-in-production')
+- `FLASK_DEBUG`: Enable debug mode (default: False, set to 'true' or '1' to enable)
+
+**Security Warning**: Never enable debug mode in production environments.
+
+You can also modify the following variables in `app.py`:
 
 - `UPLOAD_FOLDER`: Directory where uploaded files are stored (default: 'uploads')
 - `ALLOWED_EXTENSIONS`: Set of allowed file extensions
@@ -81,10 +88,13 @@ dify/
 To run in development mode with debug enabled:
 
 ```bash
+export FLASK_DEBUG=true
 python app.py
 ```
 
 The application will be accessible at `http://localhost:5000` with auto-reload enabled.
+
+**Note**: Debug mode should never be enabled in production as it may allow attackers to execute arbitrary code.
 
 ## License
 

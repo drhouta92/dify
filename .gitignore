@@ -40,3 +40,7 @@ uploads/
 # OS
 .DS_Store
 Thumbs.db
+
+# Test files
+test_upload.py
+testfile.txt
