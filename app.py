@@ -8,7 +8,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, sen
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = 'dev-secret-key-change-in-production'
+app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
 # Configuration
 UPLOAD_FOLDER = 'uploads'
@@ -69,12 +69,14 @@ def download_file(filename):
 @app.route('/delete/<filename>', methods=['POST'])
 def delete_file(filename):
     """Delete an uploaded file."""
-    filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-    if os.path.exists(filepath):
+    # Use secure_filename to prevent path traversal attacks
+    safe_filename = secure_filename(filename)
+    filepath = os.path.join(app.config['UPLOAD_FOLDER'], safe_filename)
+    if os.path.exists(filepath) and os.path.isfile(filepath):
         os.remove(filepath)
-        flash(f'File "{filename}" deleted successfully!', 'success')
+        flash(f'File "{safe_filename}" deleted successfully!', 'success')
     else:
-        flash(f'File "{filename}" not found', 'error')
+        flash(f'File "{safe_filename}" not found', 'error')
     return redirect(url_for('index'))
 
 

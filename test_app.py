@@ -32,8 +32,10 @@ def test_index_page(client):
 
 def test_upload_valid_file(client):
     """Test uploading a valid file."""
+    # Create a temporary file
+    import io
     data = {
-        'file': (tempfile.NamedTemporaryFile(suffix='.txt', delete=False), 'test.txt')
+        'file': (io.BytesIO(b"test content"), 'test.txt')
     }
     response = client.post('/upload', data=data, follow_redirects=True)
     assert response.status_code == 200
@@ -49,8 +51,9 @@ def test_upload_no_file(client):
 
 def test_upload_invalid_extension(client):
     """Test uploading a file with invalid extension."""
+    import io
     data = {
-        'file': (tempfile.NamedTemporaryFile(suffix='.exe', delete=False), 'test.exe')
+        'file': (io.BytesIO(b"test content"), 'test.exe')
     }
     response = client.post('/upload', data=data, follow_redirects=True)
     assert response.status_code == 200
