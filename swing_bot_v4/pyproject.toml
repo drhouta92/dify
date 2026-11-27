@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "swingbot"
+version = "4.0.0"
+description = "Shariah-screened 15m/1h/1d swing trading bot for the Alpaca PAPER environment"
+requires-python = ">=3.11"
+dependencies = [
+    "alpaca-py==0.45.0",
+    "numpy>=2.2,<3",
+    "pandas>=2.2,<4",
+    "requests>=2.32,<3",
+    "rich>=13",
+    "tvscreener==0.8.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+swingbot = "swingbot.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["swingbot*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

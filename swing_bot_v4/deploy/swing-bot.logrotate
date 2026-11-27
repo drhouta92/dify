@@ -1,0 +1,13 @@
+# Text logs only. NEVER rotate state.sqlite3 (or its -wal/-shm files) or caches.
+# WatchedFileHandler reopens the file after rotation.
+/var/lib/swing-bot/swingbot.log {
+    daily
+    maxsize 20M
+    rotate 30
+    missingok
+    notifempty
+    compress
+    delaycompress
+    create 0640 swing-bot swing-bot
+    su swing-bot swing-bot
+}
