@@ -1,0 +1,51 @@
+[Unit]
+Description=swingbot v4 (Alpaca PAPER)
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+User=swing-bot
+Group=swing-bot
+WorkingDirectory=/var/lib/swing-bot
+EnvironmentFile=/etc/swing-bot.env
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Environment=SWING_DATA_DIR=/var/lib/swing-bot
+Environment=HOME=/var/lib/swing-bot
+ExecStart=/opt/swing-bot/venv/bin/python -m swingbot run
+Restart=always
+RestartSec=60
+# SIGTERM sets a stop flag; the current cycle finishes (fill waits are bounded at ~60 s).
+KillSignal=SIGTERM
+TimeoutStopSec=120
+UMask=0027
+StateDirectory=swing-bot
+StateDirectoryMode=0750
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/swing-bot
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+RestrictSUIDSGID=true
+RestrictNamespaces=true
+RestrictRealtime=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+CapabilityBoundingSet=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=swing-bot
+
+[Install]
+WantedBy=multi-user.target

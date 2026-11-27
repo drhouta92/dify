@@ -1,0 +1,9 @@
+# Exact versions the test suite passed against (Python 3.13). Install with:
+#   python -m pip install -r requirements.lock && python -m pip install -e . --no-deps
+alpaca-py==0.45.0
+numpy==2.5.5
+pandas==3.1.1
+requests==2.34.2
+rich==15.0.0
+tvscreener==0.8.2
+pytest==9.2.0
